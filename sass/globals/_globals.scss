@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+.gradient-bcg {
+    background: linear-gradient(135deg, $gd-darker 0%, $gd-lighter 100%);
+}
+
+button {
+    background-color: transparent;
+    display: block;
+    border: 1px solid lightgrey;
+    outline: none;
+    cursor: pointer;
+}
+
+.roundy {
+    border-radius: $rounded;
+}
