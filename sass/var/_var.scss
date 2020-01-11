@@ -23,6 +23,8 @@ $basic-measure: 20px;
 $big-measue: $basic-measure *1.5;
 $std-margin: $basic-measure;
 
+$tab-height: $big-measue+$std-margin+$std-margin;
+
 // fonts sizes
 $card-header: $basic-measure;
 

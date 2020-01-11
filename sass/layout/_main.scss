@@ -14,10 +14,6 @@ body {
     justify-content: center
 }
 
-.card {
-    padding: $std-margin;
-}
-
 .dark {
     color: $light;
 }
@@ -36,15 +32,15 @@ body {
 
         .card {
             padding-bottom: 0;
-            height: $big-measue + $std-margin + $std-margin;
+            height: $tab-height;
             transition: height .5s ease-in;
 
 
             >.tab {
+                height: $tab-height;
                 border: none;
-                height: $big-measue;
                 width: 100%;
-                margin-bottom: $std-margin;
+                padding: $std-margin;
                 text-transform: capitalize;
                 letter-spacing: 2px;
                 font-weight: 600;
@@ -52,7 +48,8 @@ body {
                 color: inherit;
             }
 
-            .content {
+            >.content {
+                padding: $std-margin;
                 height: 0;
             }
 

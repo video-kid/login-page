@@ -12,49 +12,67 @@ $(document).ready(function() {
     }
   }
 
-  let tabArray = [];
+  const generateTabMatrix = controlsArr => {
+    tabMatrix = [];
+    controlsArr.map(tabControl => {
+      let controls = new Tab(tabControl);
+      tabMatrix.push(controls);
+    });
+    return tabMatrix;
+  };
 
-  const tabHandler = () => {
-    tabArray.map(elem => {
-      //log(elem);
-      // logs: {card-2: Tab}
+  const stateMatrix = {
+    tabMatrix: [],
+
+    clearMatrix() {
+      this.tabMatrix.forEach(e => {
+        e.state = false;
+        // log(e.card);
+        e.card.classList.remove("active");
+      });
+    },
+    changeFieldState(field) {
+      return !field;
+    },
+    activateField(selectedFieldName) {
+      this.tabMatrix.forEach(tabField => {
+        if (tabField.name === selectedFieldName) {
+          tabField.state = this.changeFieldState(tabField.state);
+          //log(selectedFieldName);
+          //log(tabField.card);
+          tabField.card.classList.toggle("active");
+        }
+      });
+    },
+    selectOne(selectedFieldName) {
+      this.clearMatrix();
+      this.activateField(selectedFieldName);
+    },
+    selectMany(selectedFieldName) {
+      this.activateField(selectedFieldName);
+    },
+
+    set setDB(db) {
+      this.tabMatrix = db;
+      //log(this.tabMatrix);
+    }
+  };
+
+  const tabsActivator = () => {
+    let tabControls = [...document.querySelectorAll("[aria-controls]")];
+    let tabArray = generateTabMatrix(tabControls);
+    stateMatrix.setDB = tabArray;
+    log(stateMatrix.tabMatrix);
+
+    tabControls.forEach(tabControl => {
+      tabControl.addEventListener("click", e => {
+        let card = e.target.parentNode;
+        //let selectedTab = e.target.getAttribute("aria-controls");
+        // card.classList.toggle("active");
+        stateMatrix.selectOne(e.target.getAttribute("aria-controls"));
+      });
     });
   };
 
-  let tabControls = [...document.querySelectorAll("[aria-controls]")];
-
-  tabControls.map(tabControl => {
-    let controlName = tabControl.getAttribute("aria-controls");
-    let controls = new Tab(tabControl);
-    tabArray.push({ [controlName]: controls });
-
-    tabControl.addEventListener("click", e => {
-      let card = e.target.parentNode;
-      let control = e.target;
-      card.classList.toggle("active");
-    });
-  });
-
-  let tabMatrix = [0, 0, 0, 0];
-
-  const clearMatrix = matrix => {
-    let tmpArr = [];
-    matrix.forEach(elem => {
-      tmpArr.push(0);
-    });
-    return (matrix = tmpArr);
-  };
-
-  const setActiveField = position => {
-    clearMatrix(tabMatrix);
-    tabMatrix[position] = 1;
-    log(tabMatrix);
-  };
-
-  log(tabMatrix);
-  setActiveField(2);
-  setActiveField(3);
-  setActiveField(1);
-
-  tabHandler();
+  tabsActivator();
 });
